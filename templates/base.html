@@ -1,0 +1,29 @@
+$def with (page)
+
+<html>
+<head>
+    <title>Nathan's Blog</title>
+    <style>
+        #menu {
+            width: 200px;
+            float: right;
+        }
+    </style>
+    <script src="/static/js/jquery-1.6.2.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+<ul id="menu">
+    <li><a href="/appcode.py/">Home</a></li>
+    <li><a href="/appcode.py/new">New Post</a></li>
+$if not auth.getUser():
+    <li><a href="/appcode.py/login">Login</a></li>
+    <li><a href="/appcode.py/addaccount">Sign Up</a></li>
+$else:
+    <li><a href="/appcode.py/logout">Logout</a></li>
+</ul>
+
+$:page
+
+</body>
+</html>

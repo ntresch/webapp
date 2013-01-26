@@ -1,0 +1,20 @@
+$def with (comments,model)
+<ul>
+$for comment in comments:
+  <li>
+  <h2>$comment.title</h2>
+  $datestr(comment.posted_on)<br/>
+
+  $comment.content<br/>
+  by: $comment.user_login<br/>
+  Votes: $comment.upvotes up, $comment.downvotes down  
+  $if auth.getUser() and (auth.getUser().user_id == comment.user_id):
+        <a href="/appcode.py/edit/$comment.id">Edit</a>
+  $elif auth.getUser() and not model.hasUserVoted(auth.getUser().user_id,comment.id):
+        <a href="/appcode.py/vote/$comment.id/1">Vote up</a> - <a href="/appcode.py/vote/$comment.id/0">Vote Down</a>
+  $elif auth.getUser():
+        <a href="/appcode.py/deletevote/$comment.id">Delete vote</a>
+<br/>
+
+
+</ul>  

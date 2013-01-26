@@ -1,0 +1,22 @@
+$def with (post,user,comments,form,voted,votes)
+
+<h1>$post.title</h1>
+$datestr(post.posted_on)<br/>
+
+$post.content<br/>
+by: $user.user_login<br/>
+Votes: $votes.upvotes up, $votes.downvotes down
+$if auth.getUser() and auth.getUser().user_id == post.user_id:
+        <a href="/appcode.py/edit/$post.id">Edit</a>
+$elif auth.getUser() and not voted:
+        <a href="/appcode.py/vote/$post.id/1">Vote up</a> - <a href="/appcode.py/vote/$post.id/0">Vote Down</a>
+$elif auth.getUser():
+        <a href="/appcode.py/deletevote/$post.id">Delete vote</a>
+<br/>
+$:comments<br/>
+<br/>
+<br/>
+$if auth.getUser():
+        <form action="" method="post">
+        $:form.render()
+        </form>

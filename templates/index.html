@@ -1,0 +1,17 @@
+$def with (posts,user)
+<h1>Blog posts</h1>
+
+<ul>
+$for post in posts:
+    <li>
+    <a href="/appcode.py/view/$post.id">$post.title</a> 
+    from $datestr(post.posted_on) by $post.user_login 
+    - Votes: $post.upvotes up, $post.downvotes down
+    $if user and (user.user_id == post.user_id):
+        <a href="/appcode.py/edit/$post.id">Edit</a><br/>
+    $else:
+        <br/>
+    $post.comments comments
+    </li>
+
+</ul>

@@ -2,7 +2,7 @@
 import web
 import model
 
-from web.contrib.auth import DBAuth
+from auth import DBAuth
 
 
 ### Url mappings
@@ -28,13 +28,13 @@ urls = (
 t_globals = {
     'datestr': web.datestr
 }
-render = web.template.render('/usr/www/nathantresch/templates/', globals=t_globals)
+render = web.template.render('/var/www/webapp/templates', globals=t_globals)
 
 app = web.application(urls, globals(),autoreload=False)
 main = app.wsgifunc()
 
-db = web.database(dbn='mysql', db='blog', user='spectre', pw='rty133p')
-mysession = web.session.Session(app, web.session.DiskStore('/usr/www/nathantresch/sessions'))
+db = web.database(dbn='mysql', db='blog', user='root', pw='MnEmn0Ck')
+mysession = web.session.Session(app, web.session.DiskStore('/var/www/webapp/sessions'))
 
 settings = dict(
     template_login = render.login,
@@ -53,8 +53,8 @@ t_globals = {
     'model':   model
 }
 
-render = web.template.render('/usr/www/nathantresch/templates/', base='base', globals=t_globals)
-renderInsert = web.template.render('/usr/www/nathantresch/templates/', globals=t_globals)
+render = web.template.render('/var/www/webapp/templates/', base='base', globals=t_globals)
+renderInsert = web.template.render('/var/www/webapp/templates/', globals=t_globals)
 
 class Index:
     def GET(self):
@@ -76,6 +76,7 @@ class View:
 
     def GET(self, id):
         """ View single post """
+	# TODO: make the post test render as htmnl
         post = model.get_post(int(id))
         user = model.getUserById(post.user_id)
         comments = model.get_comments(int(id))
@@ -89,6 +90,7 @@ class View:
         else:
             hasUserVoted = False
         return render.view(post,user,renderedComments,self.form,hasUserVoted,votes)
+    @auth.protected()
     def POST(self,refId):
         form = self.form
 
@@ -112,7 +114,7 @@ class New:
     def GET(self):
         form = self.form()
         return render.form(form,self.title)
-        
+    @auth.protected()    
     def POST(self):
         form = self.form()
 	
@@ -135,9 +137,11 @@ class AddAccount:
         web.form.Button('Submit'),
     )
     title="Add Account"
+    @auth.protected()
     def GET(self):
         form = self.form()
         return render.form(form,self.title)
+    @auth.protected()
     def POST(self):
         form = self.form()
 
@@ -156,9 +160,6 @@ class Delete:
              model.del_post(int(id))
         raise web.seeother('/')
 
-class JsonpDemo:
-    def GET(self):
-        return render.jsonpdemo()
 
 class Edit:
     @auth.protected()

@@ -7,11 +7,11 @@ $post.content<br/>
 by: $user.user_login<br/>
 Votes: $votes.upvotes up, $votes.downvotes down
 $if auth.getUser() and auth.getUser().user_id == post.user_id:
-        <a href="/appcode.py/edit/$post.id">Edit</a>
+        <a href="/edit/$post.id">Edit</a>
 $elif auth.getUser() and not voted:
-        <a href="/appcode.py/vote/$post.id/1">Vote up</a> - <a href="/appcode.py/vote/$post.id/0">Vote Down</a>
+        <a href="/vote/$post.id/1">Vote up</a> - <a href="/vote/$post.id/0">Vote Down</a>
 $elif auth.getUser():
-        <a href="/appcode.py/deletevote/$post.id">Delete vote</a>
+        <a href="/deletevote/$post.id">Delete vote</a>
 <br/>
 $:comments<br/>
 <br/>

@@ -1,10 +1,15 @@
+CREATE DATABASE blog;
+
+USE blog;
+
 CREATE TABLE entries (
     id INT AUTO_INCREMENT,
     title TEXT,
     content TEXT,
     posted_on DATETIME,
     ref INT,
-    primary key (id)
+    primary key (id),
+    user_id int  REFERENCES user (user_id)
 );
 
 CREATE TABLE user (
@@ -31,7 +36,7 @@ CREATE TABLE user_permission (
 CREATE TABLE votes (
     polarity		BOOL,
     vote_entry_id	int REFERENCES entries (id),
-    vote_user_id	int REFERENCES user (user_id),
+    vote_user_id	int REFERENCES user (user_id)
 
 );
 

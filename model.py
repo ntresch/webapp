@@ -1,6 +1,6 @@
 import web, datetime
 
-db = web.database(dbn='mysql', db='blog', user='spectre', pw='rty133p')
+db = web.database(dbn='mysql', db='blog', user='root', pw='MnEmn0Ck')
 
 def get_posts():
     query = 'select (select count(*) from votes where vote_entry_id=e.id and polarity = true) as upvotes, (select count(*) from votes where vote_entry_id=e.id and polarity = false)  as downvotes, e.id,e.title,e.posted_on,e.user_id,e.content,u.user_login,(select count(*) from entries as e2 where e2.ref = e.id) as comments from entries as e join user as u on u.user_id = e.user_id where e.ref is NULL order by e.posted_on desc;'

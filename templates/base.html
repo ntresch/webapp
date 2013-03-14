@@ -14,13 +14,13 @@ $def with (page)
 <body>
 
 <ul id="menu">
-    <li><a href="/appcode.py/">Home</a></li>
-    <li><a href="/appcode.py/new">New Post</a></li>
+    <li><a href="/">Home</a></li>
+    <li><a href="/new">New Post</a></li>
 $if not auth.getUser():
-    <li><a href="/appcode.py/login">Login</a></li>
-    <li><a href="/appcode.py/addaccount">Sign Up</a></li>
+    <li><a href="/login">Login</a></li>
+    <li><a href="/addaccount">Sign Up</a></li>
 $else:
-    <li><a href="/appcode.py/logout">Logout</a></li>
+    <li><a href="/logout">Logout</a></li>
 </ul>
 
 $:page
